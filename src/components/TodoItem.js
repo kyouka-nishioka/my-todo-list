@@ -13,7 +13,7 @@ class TodoItem extends Component {
     const { completed, id, title} = this.props.todo;
     return (
       <ul>
-        <li className="todo-item" key={this.props.key}>
+        <li className="todo-item">
           <input 
             type="checkbox" 
             checked={completed}
