@@ -37,7 +37,7 @@
 
 // ------------------------------
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const Header = props => {
   const headerStyle = {
@@ -45,15 +45,26 @@ const Header = props => {
     lineHeight: "2em",
   }
 
-  useEffect(() => {
-    var x = Math.floor(Math.random() * 256)
-    var y = Math.floor(Math.random() * 256)
-    var z = Math.floor(Math.random() * 256)
-    let bgColor = `rgb(${x},${y},${z})`
+  const isInitialMount = useRef(true);
+  console.log(isInitialMount);
 
-    document.getElementById("inH1").innerHTML = "clicked"
-    document.getElementById("inH1").style.backgroundColor = bgColor
-  })
+  useEffect(() => {
+    var x = Math.floor(Math.random() * 256);
+    var y = Math.floor(Math.random() * 256);
+    var z = Math.floor(Math.random() * 256);
+    let bgColor = `rgb(${x},${y},${z})`;
+
+    // default value of isInitialMount is true, 
+    // and when the component has just mounted, 
+    // immediately set the value to false. 
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      // after mounting the component, else will be executed 
+      document.getElementById('inH1').innerHTML = "clicked";
+      document.getElementById("inH1").style.backgroundColor = bgColor;
+    }
+  }, [props.headerSpan])
 
   return (
     <header style={headerStyle}>
